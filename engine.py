@@ -1,6 +1,8 @@
 import sys
 import pygame as pg
 import moderngl as mgl
+from model import *
+
 
 class GraphicsEngine:
     def __init__(self, win_size = ( 1600, 900 )):
@@ -18,16 +20,23 @@ class GraphicsEngine:
         self.ctx = mgl.create_context()
         #create an object to help track time
         self.clock = pg.time.Clock()
+        
+        #Scene
+        self.scene = Triangle(self)
 
     def check_events(self):
         for event in pg.event.get():
             if event.type == pg.QUIT or (event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE):
+                self.scene.destroy()
                 pg.quit()
                 sys.exit()
 
     #Render Method  
     def render(self):
         self.ctx.clear(color=(0.08, 0.16, 0.18))
+        #render scene
+        self.scene.render()
+        #flip display
         pg.display.flip()
 
     def run(self):
