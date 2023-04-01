@@ -1,3 +1,4 @@
+import sys
 import pygame as pg
 import moderngl as mgl
 
@@ -17,3 +18,24 @@ class GraphicsEngine:
         self.ctx = mgl.create_context()
         #create an object to help track time
         self.clock = pg.time.Clock()
+
+    def check_events(self):
+        for event in pg.event.get():
+            if event.type == pg.QUIT or (event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE):
+                pg.quit()
+                sys.exit()
+
+    #Render Method  
+    def render(self):
+        self.ctx.clear(color=(0.08, 0.16, 0.18))
+        pg.display.flip()
+
+    def run(self):
+        while True:
+            self.check_events()
+            self.render()
+            self.clock.tick(60)
+
+if __name__ == '__main__':
+    app = GraphicsEngine()
+    app.run()
