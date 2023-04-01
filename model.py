@@ -8,19 +8,24 @@ class Triangle:
         self.shader_program = self.get_shader_program('default')
         self.vao = self.get_vao()
 
-    def get_vao(self):
-        vao = self.ctx.vertex_array(self.shader_program, [(self.vbo, '3f', 'in_position')])
-        return vao
+    def render(self):
+        self.vao.render()
     
     def destroy(self):
         self.vbo.release()
         self.shader_program.release()
         self.vao.release()
+    
+    def get_vao(self):
+        vao = self.ctx.vertex_array(self.shader_program, [(self.vbo, '3f', 'in_position')])
+        return vao
+    
 
     def get_vertex_data(self):
         vertex_data = [(-0.6, -0.8, 0.0), (0.6, -0.8, 0.0), (0.0, 0.8, 0.0)]
         vertex_data = np.array(vertex_data, dtype='f4')
         return vertex_data
+    
     def get_vbo(self):
         vertex_data = self.get_vertex_data()
         vbo = self.ctx.buffer(vertex_data)
